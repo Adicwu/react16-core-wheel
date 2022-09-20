@@ -1,8 +1,8 @@
 import { TAG_ROOT } from './const'
-import { schedule } from './schedule'
+import { scheduleRoot } from './schedule'
 
 function render(el, container) {
-  schedule({
+  scheduleRoot({
     tag: TAG_ROOT,
     stateNode: container,
     props: {

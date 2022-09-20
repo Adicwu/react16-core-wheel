@@ -1,8 +1,15 @@
-export function setProps(dom, newProps, oldProps) {
-  for (let key in newProps) { }
+export function setProps(dom, oldProps, newProps) {
   for (let key in oldProps) {
     if (key === 'children') return;
-    setProp(dom, key, oldProps[key])
+    if (newProps.hasOwnProperty(key)) {
+      setProp(dom, key, newProps[key])
+    }else{
+      dom.removeAttribute(key)
+    }
+  }
+  for (let key in newProps) {
+    if (key === 'children' || oldProps.hasOwnProperty(key)) return;
+    setProp(dom, key, newProps[key])
   }
 }
 

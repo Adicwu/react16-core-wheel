@@ -1,8 +1,12 @@
 import { ELEMENT_TEXT } from './const';
+import { scheduleRoot } from './schedule';
+import { Update } from './updateQueue';
 
 function createElement(type, config, ...childs) {
-  delete config.__self;
-  delete config.__source;
+  if (config) {
+    delete config.__self;
+    delete config.__source;
+  }
   return {
     type,
     props: {
@@ -15,7 +19,19 @@ function createElement(type, config, ...childs) {
   }
 }
 
+class Component {
+  constructor(props) {
+    this.props = props
+  }
+  setState(payload) {
+    this.internalFiber.updateQueue.enqueueUpdate(new Update(payload))
+    scheduleRoot()
+  }
+}
+Component.prototype.isReactComponent = {}
+
 const React = {
-  createElement
+  createElement,
+  Component
 }
 export default React
